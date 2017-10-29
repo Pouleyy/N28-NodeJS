@@ -19,7 +19,7 @@ export const UserSchema = new mongoose.Schema({
     role: {
         type: String,
         required: true,
-        enum: ["user", "moderator", "admin"],
+        enum: ["user", "admin"],
         default: "user",
     },
     password: {

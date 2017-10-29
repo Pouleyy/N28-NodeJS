@@ -14,7 +14,7 @@ const validations = {
             username: Joi.string().regex(/^[a-z0-9_]{1,15}$/).required(),
             password: Joi.string().required(),
             email: Joi.string().email().required(),
-            role: Joi.string().required().valid("user", "moderator", "admin")
+            role: Joi.string().required().valid("user", "admin")
         }
     },
     update: {

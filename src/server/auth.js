@@ -74,24 +74,6 @@ function user() {
 }
 
 /**
- * Middleware to valid only moderator & admin role user
- */
-function moderator() {
-    return (req, res, next) => {
-        authenticate(req, res, next)
-            .then(() => {
-                if (req.user.role === "moderator" || req.user.role === "admin") {
-                    next();
-                }
-                else {
-                    return Promise.reject(wrongPermission);
-                }
-            })
-            .catch(err => next(err));
-    };
-}
-
-/**
  * Middleware to valid only admin role user
  */
 function admin() {
@@ -110,13 +92,13 @@ function admin() {
 }
 
 /**
- * Middleware to valid only the author of the object (or moderator & admin)
+ * Middleware to valid only the author of the object (or admin)
  */
 function addedBy() {
     return (req, res, next) => {
         authenticate(req, res, next)
             .then(() => {
-                if (req.user.role === "admin" || req.user.role === "moderator" ||
+                if (req.user.role === "admin" ||
                     req.object.last().el().addedBy === req.user._id ||
                     req.object.last().el().addedBy._id === req.user._id) {
                     next();
@@ -130,13 +112,13 @@ function addedBy() {
 }
 
 /**
- * Middleware to be used on user & profile to check if its the owner (or moderator & admin)
+ * Middleware to be used on user & profile to check if its the owner (or admin)
  */
 function owner() {
     return (req, res, next) => {
         authenticate(req, res, next)
             .then(() => {
-                if (req.user.role === "admin" || req.user.role === "moderator" ||
+                if (req.user.role === "admin" ||
                     req.object.first().el()._id === req.user._id) {
                     next();
                 }
@@ -148,4 +130,4 @@ function owner() {
     };
 }
 
-export default { initialize, user, moderator, admin, addedBy, owner };
+export default { initialize, user, admin, addedBy, owner };
