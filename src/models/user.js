@@ -42,6 +42,10 @@ export const UserSchema = new mongoose.Schema({
         BIC: {
             type: String,
         },
+        balance: {
+            type: Number,
+            default: 0
+        },
         createdAt: {
             type: Date,
             default: Date.now()
