@@ -1,0 +1,12 @@
+{
+	"Sample API": "Sample API",
+	"Healthy": "Healthy",
+	"%s %s not found": "%s %s not found",
+	"No such user exists": "No such user exists",
+	"Your token is invalid": "Your token is invalid",
+	"N28 API": "N28 API",
+	"Unhandled server error": "Unhandled server error",
+	"This username is already taken": "This username is already taken",
+	"Username or password incorrect": "Username or password incorrect",
+	"You do not have right permission": "You do not have right permission"
+}
