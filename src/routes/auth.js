@@ -23,12 +23,12 @@ const validations = {
 };
 
 router.route("/login")
-    .post(validate(validations.login), authCtrl.login);
+    .put(validate(validations.login), authCtrl.login);
 
 router.route("/signup")
     .post(validate(validations.signup), authCtrl.signup);
 
 router.route("/logout")
-    .post(authCtrl.logout);
+    .put(authCtrl.logout);
 
 export default router;
