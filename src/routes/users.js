@@ -5,6 +5,7 @@ import Joi from "joi";
 import auth from "../server/auth";
 import defaultValidations from "../helpers/default-validations";
 import userCtrl from "../controllers/users";
+import bankAccountCtrl from "../controllers/bankAccount";
 
 const router = express.Router();
 
@@ -51,20 +52,20 @@ router.route("/:userId")
     /** DELETE /users/:userId - Delete user */
     .delete(auth.owner(), userCtrl.remove);
 
-//router.route("/:userId/bankAccount")
+router.route("/:userId/bankAccount")
     /** NO GET on /users/:userId/bankAccount 
      * because you get the Bank Account
      * /w the /:userId
      */
     
     /** POST /users/:userId/bankAccount - Create a bank account */
-    //.post(auth.owner(), userCtrl.createBankAccount);
+    .post(auth.owner(), bankAccountCtrl.create);
 
-//router.route("/:userId/bankAccount/:IBAN")
+router.route("/:userId/bankAccount/:IBAN")
     /** GET /users/:userId/bankAccount/:IBAN - Get a bank account /w his IBAN */
-    //.get(auth.owner(), userCtrl.bankAccount)
+    .get(auth.owner(), bankAccountCtrl.getOne)
     
     /** DELETE /users/:userId/bankAccount/:IBAN - Delete a bank account */
-    //.delete(auth.owner(), userCtrl.removeBankAccount);
+    .delete(auth.owner(), bankAccountCtrl.remove);
 
 export default router;

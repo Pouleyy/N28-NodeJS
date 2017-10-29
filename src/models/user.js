@@ -1,5 +1,6 @@
 import httpStatus from "http-status";
 import bcrypt from "bcryptjs";
+import faker from "faker";
 import APIError from "../helpers/api-error";
 
 import mongoose from "../server/mongo";
@@ -166,7 +167,25 @@ UserSchema.statics = {
                 user.role = role;
                 return user.save();
             });
+    },
+
+    /**
+     * Create a new bank account
+     * @param {String} username
+     * @returns {Promise<User>}
+     */
+    createBankAccount(username) {
+        return this.findById(username)
+            .then(user => {
+                const newBankAccount = {
+                    IBAN: faker.finance.iban(),
+                    BIC: faker.finance.bic(),
+                }
+                user.bankAccount.push(newBankAccount);
+                return user.save();
+            });
     }
+
 };
 
 /**
