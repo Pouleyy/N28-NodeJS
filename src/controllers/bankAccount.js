@@ -3,10 +3,20 @@ import User from "../models/user";
 
 /**
  * Get Bank Account
+ * @property {string} req.params.IBAN - The IBAN of the bank account.
  * @return {BankAccount}
  */
-function getOne(req, res) {
-    return res.json(req.object.last().el());
+function getOne(req, res, next) {
+    const user = req.object.last().el();
+    let index = user.bankAccount.findIndex(function(item, i){
+        return item.IBAN === req.params.IBAN;
+      });
+    if (index < 0) {
+        next();
+    }
+    else {
+        res.json(user.bankAccount[index]);
+    }
 }
 
 /**
