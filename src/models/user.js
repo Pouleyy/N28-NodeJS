@@ -185,7 +185,7 @@ UserSchema.statics = {
                 return user.save();
             });
     }
-
+    
 };
 
 /**
