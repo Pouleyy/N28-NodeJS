@@ -33,14 +33,22 @@ function create(req, res, next) {
 
 /**
  * Delete bank account.
- * @property {string} req.body.iban - The IBAN of the bank account.
+ * @property {string} req.params.IBAN - The IBAN of the bank account.
  * @returns {User}
  */
 function remove(req, res, next) {
     const user = req.object.last().el();
-    user.removeBankAccount(req.body.iban)
-        .then(() => { res.json(user); })
-        .catch(e => next(e));
+    let index = user.bankAccount.findIndex(function(item, i){
+        return item.IBAN === req.params.IBAN;
+      });
+    if (index < 0) {
+        next();
+    }
+    else { 
+        user.bankAccount.splice(index, 1);
+        user.save();
+        res.json({user});
+    }
 }
 
 export default { getOne, create, remove };
