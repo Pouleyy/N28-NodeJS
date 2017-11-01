@@ -8,5 +8,6 @@
 	"Unhandled server error": "Unhandled server error",
 	"This username is already taken": "This username is already taken",
 	"Username or password incorrect": "Username or password incorrect",
-	"You do not have right permission": "You do not have right permission"
+	"You do not have right permission": "You do not have right permission",
+	"This IBAN is incorrect": "This IBAN is incorrect"
 }
