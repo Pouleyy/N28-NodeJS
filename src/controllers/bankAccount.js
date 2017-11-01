@@ -1,5 +1,8 @@
+import httpStatus from "http-status";
+
 import User from "../models/user";
 
+import APIError from "../helpers/api-error";
 
 /**
  * Get Bank Account
@@ -12,7 +15,8 @@ function getOne(req, res, next) {
         return item.IBAN === req.params.IBAN;
       });
     if (index < 0) {
-        next();
+        const err = new APIError(["This IBAN is incorrect"], httpStatus.NOT_FOUND);
+        next(err);
     }
     else {
         res.json(user.bankAccount[index]);
@@ -42,7 +46,8 @@ function remove(req, res, next) {
         return item.IBAN === req.params.IBAN;
       });
     if (index < 0) {
-        next();
+        const err = new APIError(["This IBAN is incorrect"], httpStatus.NOT_FOUND);
+        next(err);
     }
     else { 
         user.bankAccount.splice(index, 1);
