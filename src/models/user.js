@@ -11,7 +11,6 @@ export const UserSchema = new mongoose.Schema({
         type: String,
         match: [/^[a-z0-9_]{1,15}$/, "The value of path {PATH} ({VALUE}) is not a valid username."],
         required: true,
-        unique: true,
     },
     className: {
         type: String,
