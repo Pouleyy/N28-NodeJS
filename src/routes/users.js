@@ -59,7 +59,7 @@ router.route("/:userId/bankAccount")
      */
     
     /** POST /users/:userId/bankAccount - Create a bank account */
-    .post(auth.owner(), bankAccountCtrl.create);
+    .post(auth.user(), bankAccountCtrl.create);
 
 router.route("/:userId/bankAccount/:IBAN")
     /** GET /users/:userId/bankAccount/:IBAN - Get a bank account /w his IBAN */
