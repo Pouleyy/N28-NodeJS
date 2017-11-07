@@ -5,16 +5,6 @@ import mongoose from "../server/mongo";
 import utils from "./utils";
 
 export const TransferSchema = new mongoose.Schema({
-    className: {
-        type: String,
-        default: "transfer"
-    },
-    transfer_type: {
-        type: String,
-        required: true,
-        enum: ["ponctual", "regular", "ponctual child"],
-        default: "regular",
-    },
     sender: {
         type: String, // IBAN of the sender
         required: true
@@ -23,9 +13,23 @@ export const TransferSchema = new mongoose.Schema({
         type: String, // IBAN of the receiver
         required: true
     },
-    amout: {
+    amount: {
         type: Number,
         required: true
+    },
+    reason: {
+        type: String,
+        required: true
+    },
+    className: {
+        type: String,
+        default: "transfer"
+    },
+    transfer_type: {
+        type: String,
+        required: true,
+        enum: ["ponctual", "regular", "regular child"],
+        default: "ponctual",
     },
     frequency: {  //Frenquency in day that the transfer must happen if transfer is a ponctual one
         type: Number,
