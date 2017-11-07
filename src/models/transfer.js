@@ -65,16 +65,18 @@ TransferSchema.statics = {
      * @param {String} sender
      * @param {String} receiver
      * @param {Number} amount
-     * @param {String} [transferType]
+     * @param {String} reason
+     * @param {String} [transfer_type]
      * @param {Number} [frequency]
      * @returns {Promise<User>}
      */
-    create(sender, receiver, amount, transfer_type, frequency) {
+    create(sender, receiver, amount, reason, transfer_type, frequency) {
         let transfer = new this();
         transfer.sender = sender;
         transfer.receiver = receiver;
         transfer.amount = amount;
-        if (typeof frequency !== 'undefined' || transfer_type !== 'regular') {
+        transfer.reason = reason;
+        if (typeof frequency !== 'undefined') {
             transfer.transfer_type = transfer_type;
             transfer.frequency = frequency;
         }
