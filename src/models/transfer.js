@@ -53,7 +53,7 @@ TransferSchema.statics = {
      * @param {String} IBAN - This is the IBAN of the account
      * @returns {Promise<Transfer[]>}
      */
-    get(IBAN, limit) {
+    get(IBAN) {
         return this
             .find({sender: IBAN})
             .sort({ transferAt: - 1})
