@@ -114,6 +114,27 @@ UserSchema.statics = {
     },
 
     /**
+     * Get user by IBAN
+     * @param {String} IBAN - This is the IBAN of the user
+     * @returns {Promise<User, Error>}
+     */
+    getByIBAN(IBAN) {
+        return this
+        .findOne({"bankAccount.IBAN": IBAN})
+        .exec()
+        .then(user => {
+            if (user) {
+                return user;
+            }
+            const err = new APIError(["This IBAN is incorrect"], httpStatus.NOT_FOUND);
+            return Promise.reject(err);
+        })
+        .catch(err => {
+            return Promise.reject(err);
+        });
+    },
+
+    /**
      * List users in descending order of 'createdAt' timestamp
      * @param {number} skip - Number of users to be skipped.
      * @param {number} limit - Limit number of users to be returned
