@@ -1,4 +1,10 @@
 import Transfer from "../models/transfer";
+import User from "../models/user";
+
+import APIError from "../helpers/api-error";
+
+import httpStatus from "http-status";
+
 
 /**
  * Get all the transfer of an user
@@ -23,12 +29,36 @@ function get(req, res) {
  * @return {Transfer[]}
  */
 function create(req, res, next) {
-    Transfer.create(req.params.IBAN, req.body.receiver, req.body.amount, req.body.reason, req.body.transfer_type, req.body.frequency)
-        .then(transfer => res.json(transfer))
-        .then( () => {
-            //Mettre a jour les soldes
+    const user = req.object.last().el();
+    let index = user.bankAccount.findIndex(function(item, i){
+        return item.IBAN === req.params.IBAN;
+      });
+    if (user.bankAccount[index].balance < req.body.amount) {
+        const err = new APIError(["Your balance is too low to withdraw"], httpStatus.METHOD_NOT_ALLOWED);
+        next(err);
+    }
+    User.getByIBAN(req.body.receiver)
+    .then(receiver => {
+        Transfer.create(req.params.IBAN, req.body.receiver, req.body.amount, req.body.reason, req.body.transfer_type, req.body.frequency)
+            .then(transfer =>  {
+                const transferSave = transfer;
+                user.bankAccount[index].balance -= req.body.amount;
+                user.save()
+                .then(userSave => {
+                    let receiverTest = receiver;
+                    let indexR = receiver.bankAccount.findIndex(function(item, i){
+                        return item.IBAN === req.body.receiver;
+                    });
+                    receiver.bankAccount[indexR].balance += req.body.amount;
+                    receiver.save()
+                    .then(receiver => res.json({transfer: transferSave}))
+                    .catch(e => next(e));                    
+                })
+                .catch(e => next(e));
+            })
+            .catch(e => next(e));
         })
-        .catch(e => next(e));
+    .catch(e => next(e));
 }
 
 export default { get, create };
