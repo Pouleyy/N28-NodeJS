@@ -93,7 +93,7 @@ UserSchema.statics = {
 
     /**
      * Get user
-     * @param {String} id - This _id of user
+     * @param {String} id - This is the _id of user
      * @returns {Promise<User, Error>}
      */
     get(id) {
