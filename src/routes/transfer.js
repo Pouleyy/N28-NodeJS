@@ -24,7 +24,7 @@ const validations = {
 router.param("userId", validate(defaultValidations.userId));
 router.param("userId", userCtrl.load);
 
-router.route("/:IBAN")
+router.route("/:userId/:IBAN")
     /** GET /transfer/:IBAN - Get all the transfer of a bank account /w his IBAN */
     .get(auth.owner(), transferCtrl.get)
     
