@@ -160,6 +160,11 @@ UserSchema.statics = {
         user._id = username;
         user.password = password;
         user.email = email;
+        const newBankAccount = {
+            IBAN: faker.finance.iban(),
+            BIC: faker.finance.bic(),
+        }
+        user.bankAccount.push(newBankAccount);
         return user.save();
     },
 
